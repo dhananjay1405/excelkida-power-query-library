@@ -1,0 +1,19 @@
+{
+  "name": "excelkida-power-query-library",
+  "version": "1.0.0",
+  "description": "Power Query library project containing M Language scripts for data extraction and processing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dhananjay1405/excelkida-power-query-library.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dhananjay1405/excelkida-power-query-library/issues"
+  },
+  "homepage": "https://github.com/dhananjay1405/excelkida-power-query-library#readme"
+}
