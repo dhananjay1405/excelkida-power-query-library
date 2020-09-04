@@ -1,5 +1,6 @@
 /*
-    Trial Balance (for the period)
+    Power Query: Trial Balance (for the period)
+    
     Field Information (as below)
       Opening / Closing Balance >>> (Negative = Dr) | (Positive = Credit)
       Net Debit / Net Credit >>> Always positive

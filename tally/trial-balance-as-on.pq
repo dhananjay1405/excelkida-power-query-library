@@ -1,5 +1,6 @@
 /*
-    Trial Balance (as on Date)
+    Power Query: Trial Balance (as on Date)
+    
     Field Information (as below)
       Balance >>> (Negative = Dr) | (Positive = Credit)
 */

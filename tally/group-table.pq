@@ -1,5 +1,6 @@
 /*
-    Import Groups table of Tally
+    Power Query: Group table of Tally
+    
     Field Information (as below)
       IsRevenue > (Yes = PL) | (No = BS)
       IsDeemedPositive > (Yes = Dr) | (No = Cr)

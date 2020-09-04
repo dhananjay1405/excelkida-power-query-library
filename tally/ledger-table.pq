@@ -1,5 +1,6 @@
 /*
-    Import Ledger table of Tally
+    Power Query: Ledger table of Tally (with its balances as on date)
+
     Field Information (as below)
       Nature > (PL = Profit Loss) | (BS = Balance Sheet)
       Balance > (Negative = Dr) | (Positive = Credit)
