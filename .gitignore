@@ -1,5 +1,4 @@
 .vscode/
 package-lock.json
-tally/*.xml
 tally/*.tdl
 experiment/
