@@ -8,6 +8,7 @@
     Output Fields: (as below)
       Name [text]: Ledger name
       Parent [text]: Group name
+      PrimaryGroup [text]: Ultimate Primary Group as defined in Tally
       OpeningBalance [number]: Opening Balance of Ledger
       Net Debit [number]: Sum of debits to ledger row
       Net Credit [number]: Sum of credits to ledger row
