@@ -27,13 +27,16 @@
                         <SCROLLED>Vertical</SCROLLED>
                     </PART>
                     <LINE NAME="MyLine">
-                        <FIELDS>FldName,FldParent,FldOpeningBalance,FldNetDebit,FldNetCredit,FldClosingBalance,FldDescription</FIELDS>
+                        <FIELDS>FldName,FldParent,FldPrimaryGroup,FldOpeningBalance,FldNetDebit,FldNetCredit,FldClosingBalance,FldDescription</FIELDS>
                     </LINE>
                     <FIELD NAME="FldName">
                         <SET>$$StringFindAndReplace:$Name:'"':'""'</SET>
                     </FIELD>
                     <FIELD NAME="FldParent">
                         <SET>$$StringFindAndReplace:$Parent:'"':'""'</SET>
+                    </FIELD>
+                    <FIELD NAME="FldPrimaryGroup">
+                        <SET>$_PrimaryGroup</SET>
                     </FIELD>
                     <FIELD NAME="FldOpeningBalance">
                         <SET>$$StringFindAndReplace:(if $$IsDebit:$OpeningBalance then -$$NumValue:$OpeningBalance else $$NumValue:$OpeningBalance):"(-)":"-"</SET>
