@@ -36,7 +36,7 @@
                         <SET>$$StringFindAndReplace:$Parent:'"':'""'</SET>
                     </FIELD>
                     <FIELD NAME="FldPrimaryGroup">
-                        <SET>$_PrimaryGroup</SET>
+                        <SET>if $$IsEmpty:$_PrimaryGroup then $$StrByCharCode:245 else $$StringFindAndReplace:$_PrimaryGroup:'"':'""'</SET>
                     </FIELD>
                     <FIELD NAME="FldOpeningBalance">
                         <SET>$$StringFindAndReplace:(if $$IsDebit:$OpeningBalance then -$$NumValue:$OpeningBalance else $$NumValue:$OpeningBalance):"(-)":"-"</SET>
