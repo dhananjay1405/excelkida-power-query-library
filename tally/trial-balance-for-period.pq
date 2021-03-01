@@ -26,7 +26,7 @@ let
     toDate = Date.ToText(#date(2020,3,31), "yyyyMMdd"),  /* TO date */
     body = Text.Replace(Text.Replace(_body, "$fromDate$", fromDate), "$toDate$", toDate),
     Source = Csv.Document(Text.Replace(Text.FromBinary(Web.Contents(url, [Content=Text.ToBinary(body, TextEncoding.Utf16), Headers=[#"Content-Type"="text/xml;charset=utf-16"]]), TextEncoding.Utf16), ",#(cr,lf)", "#(cr,lf)"), { "Name", "Parent", "PrimaryGroup", "OpeningBalance", "Net Debit", "Net Credit", "ClosingBalance", "Description" }),
-    Tbl01 = Table.TransformColumns(Source, { {"OpeningBalance", each Number.FromText(if _ = "" then "0.00" else Text.Replace(Text.Replace(_,",",""),"(-)","-")) as number}, {"ClosingBalance", each Number.FromText(if _ = "" then "0.00" else Text.Replace(Text.Replace(_,",",""),"(-)","-")) as number}, { "Description", each Text.Replace(_,"õ","") } }),
+    Tbl01 = Table.TransformColumns(Source, { { "PrimaryGroup", each Text.Replace(_,"õ","") }, {"OpeningBalance", each Number.FromText(if _ = "" then "0.00" else Text.Replace(Text.Replace(_,",",""),"(-)","-")) as number}, {"ClosingBalance", each Number.FromText(if _ = "" then "0.00" else Text.Replace(Text.Replace(_,",",""),"(-)","-")) as number}, { "Description", each Text.Replace(_,"õ","") } }),
     Tbl02 = Table.TransformColumnTypes(Tbl01,{{"OpeningBalance", type number}, {"ClosingBalance", type number}, {"Net Debit", type number}, {"Net Credit", type number}})
 in
     Tbl02
