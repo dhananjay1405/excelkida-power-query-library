@@ -27,13 +27,16 @@
                         <SCROLLED>Vertical</SCROLLED>
                     </PART>
                     <LINE NAME="MyLine">
-                        <FIELDS>FldDate,FldVoucherType,FldLedger,FldAmount,FldNarration</FIELDS>
+                        <FIELDS>FldDate,FldVoucherType,FldVoucherNumber,FldLedger,FldAmount,FldNarration</FIELDS>
                     </LINE>
                     <FIELD NAME="FldDate">
                         <SET>$Date</SET>
                     </FIELD>
                     <FIELD NAME="FldVoucherType">
                         <SET>$VoucherTypeName</SET>
+                    </FIELD>
+                    <FIELD NAME="FldVoucherNumber">
+                        <SET>$$StringFindAndReplace:$VoucherNumber:'"':'""'</SET>
                     </FIELD>
                     <FIELD NAME="FldLedger">
                         <SET>$$StringFindAndReplace:$FldLedger:'"':'""'</SET>
