@@ -50,13 +50,15 @@
                     <COLLECTION NAME="MyCollection">
                         <TYPE>Voucher</TYPE>
                         <FETCH>Narration,AllLedgerEntries</FETCH>
-                        <FILTER>FilterVch</FILTER>
+                        <FILTER>FilterCancelledVouchers,FilterOptionalVouchers,FilterVch</FILTER>
                     </COLLECTION>
                     <SYSTEM TYPE="Formulae" NAME="FilterVch">NOT $$IsEmpty:($$FilterValue:$LedgerName:AllLedgerEntries:First:FilterVchLedger)</SYSTEM>
                     <SYSTEM TYPE="Formulae" NAME="FilterVchLedger">$$IsEqual:$LedgerName:"$ledgerName$"</SYSTEM>
                     <SYSTEM TYPE="Formulae" NAME="FilterVchLedgerNot">NOT $$IsEqual:$LedgerName:"$ledgerName$"</SYSTEM>
                     <SYSTEM TYPE="Formulae" NAME="FldAmount">if $$IsDr:$$FilterAmtTotal:AllLedgerEntries:FilterVchLedger:$Amount then (-$$FilterAmtTotal:AllLedgerEntries:FilterVchLedger:$Amount) else ($$FilterAmtTotal:AllLedgerEntries:FilterVchLedger:$Amount)</SYSTEM>
                     <SYSTEM TYPE="Formulae" NAME="FldLedger">if $$FilterCount:AllLedgerEntries:FilterVchLedgerNot > 1 then ($$FullList:AllLedgerEntries:$LedgerName) else ($$FilterValue:$LedgerName:AllLedgerEntries:First:FilterVchLedgerNot)</SYSTEM>
+                    <SYSTEM TYPE="Formulae" NAME="FilterCancelledVouchers">NOT $IsCancelled</SYSTEM>
+                    <SYSTEM TYPE="Formulae" NAME="FilterOptionalVouchers">NOT $IsOptional</SYSTEM>
                 </TDLMESSAGE>
             </TDL>
         </DESC>

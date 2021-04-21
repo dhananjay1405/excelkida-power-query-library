@@ -39,10 +39,10 @@
                         <FIELDS>FldClosingValue</FIELDS>
                     </LINE>
                     <FIELD NAME="FldName">
-                        <SET>$Name</SET>
+                        <SET>$$StringFindAndReplace:$Name:'"':'""'</SET>
                     </FIELD>
                     <FIELD NAME="FldParent">
-                        <SET>$Parent</SET>
+                        <SET>$$StringFindAndReplace:$Parent:'"':'""'</SET>
                     </FIELD>
                     <FIELD NAME="FldOpeningQuantity">
                         <SET>if $$IsEmpty:$OpeningBalance then 0 else $$AsAmount:$OpeningBalance</SET>
