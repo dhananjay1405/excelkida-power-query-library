@@ -10,7 +10,7 @@ let
     toDate = #date(Number.FromText(Text.Start(FinancialYear,4))+1,3,31),
     _LedgerName = Text.Replace(Text.Replace(Text.Replace(Text.Replace(Text.Replace(LedgerName,"&","&amp;"),"'","&apos;"),"""","&quot;"),">","&gt;"),"<","&lt;"),
     url = "http://localhost:9000",
-    body = "<?xml version=""1.0"" encoding=""utf-8""?><ENVELOPE><HEADER><VERSION>1</VERSION><TALLYREQUEST>Export</TALLYREQUEST><TYPE>Data</TYPE><ID>Ledger Monthly Summary</ID></HEADER><BODY><DESC><STATICVARIABLES><SVEXPORTFORMAT>$$SysName:ASCII</SVEXPORTFORMAT><SVFROMDATE>$fromDate$</SVFROMDATE><SVTODATE>$toDate$</SVTODATE><LEDGERNAME>$ledgerName$</LEDGERNAME></STATICVARIABLES></DESC></BODY></ENVELOPE>",
+    body = "<?xml version=""1.0"" encoding=""utf-8""?><ENVELOPE><HEADER><VERSION>1</VERSION><TALLYREQUEST>Export</TALLYREQUEST><TYPE>Data</TYPE><ID>Ledger Monthly Summary</ID></HEADER><BODY><DESC><STATICVARIABLES><SVEXPORTFORMAT>ASCII (Comma Delimited)</SVEXPORTFORMAT><SVFROMDATE>$fromDate$</SVFROMDATE><SVTODATE>$toDate$</SVTODATE><LEDGERNAME>$ledgerName$</LEDGERNAME></STATICVARIABLES></DESC></BODY></ENVELOPE>",
     _body = Text.Replace(Text.Replace(Text.Replace(body, "$ledgerName$", LedgerName), "$fromDate$", Date.ToText(fromDate,"yyyyMMdd")), "$toDate$", Date.ToText(toDate,"yyyyMMdd")),
     Source = Csv.Document(Text.Replace(Text.FromBinary(Web.Contents(url, [Content=Text.ToBinary(_body, TextEncoding.Utf16), Headers=[#"Content-Type"="text/xml;charset=utf-16"]]), TextEncoding.Utf16), ",#(cr,lf)", "#(cr,lf)"), { "Month", "Debit", "Credit", "Closing" }),
     Tbl01 = Table.TransformColumnTypes(Source,{ {"Month", type text}, {"Debit", type number}, {"Credit", type number}, {"Closing", type number} }),

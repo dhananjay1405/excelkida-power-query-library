@@ -11,7 +11,7 @@
             <STATICVARIABLES>
                 <SVFROMDATE>$fromDate$</SVFROMDATE>
                 <SVTODATE>$toDate$</SVTODATE>
-                <SVEXPORTFORMAT>$$SysName:ASCII</SVEXPORTFORMAT>
+                <SVEXPORTFORMAT>ASCII (Comma Delimited)</SVEXPORTFORMAT>
             </STATICVARIABLES>
             <TDL>
                 <TDLMESSAGE>

@@ -9,7 +9,7 @@
     <BODY>
         <DESC>
             <STATICVARIABLES>
-                <SVEXPORTFORMAT>$$SysName:ASCII</SVEXPORTFORMAT>
+                <SVEXPORTFORMAT>ASCII (Comma Delimited)</SVEXPORTFORMAT>
                 <SVFROMDATE>$fromDate$</SVFROMDATE>
                 <SVTODATE>$toDate$</SVTODATE>
                 <LEDGERNAME>$ledgerName$</LEDGERNAME>

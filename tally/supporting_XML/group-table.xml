@@ -9,7 +9,7 @@
     <BODY>
         <DESC>
             <STATICVARIABLES>
-                <SVEXPORTFORMAT>$$SysName:ASCII</SVEXPORTFORMAT>
+                <SVEXPORTFORMAT>ASCII (Comma Delimited)</SVEXPORTFORMAT>
             </STATICVARIABLES>
             <TDL>
                 <TDLMESSAGE>
