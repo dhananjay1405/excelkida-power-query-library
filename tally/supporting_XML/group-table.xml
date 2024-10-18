@@ -25,7 +25,7 @@
                         <SCROLLED>Vertical</SCROLLED>
                     </PART>
                     <LINE NAME="MyLine">
-                        <FIELDS>FldGuid,FldName,FldParent,FldPrimaryGroup,FldIsRevenue,FldIsDeemedPositive,FldSortPosition</FIELDS>
+                        <FIELDS>FldGuid,FldName,FldParent,FldPrimaryGroup,FldIsRevenue,FldIsDeemedPositive,FldAffectsGrossProfit,FldSortPosition</FIELDS>
                     </LINE>
                     <FIELD NAME="FldGuid">
                         <SET>$Guid</SET>
@@ -45,12 +45,15 @@
                     <FIELD NAME="FldIsDeemedPositive">
                         <SET>$IsDeemedPositive</SET>
                     </FIELD>
+                    <FIELD NAME="FldAffectsGrossProfit">
+                        <SET>$AffectsGrossProfit</SET>
+                    </FIELD>
                     <FIELD NAME="FldSortPosition">
                         <SET>$SortPosition</SET>
                     </FIELD>
                     <COLLECTION NAME="MyCollection">
                         <TYPE>Group</TYPE>
-                        <FETCH>IsRevenue,IsDeemedPositive,SortPosition,_PrimaryGroup</FETCH>
+                        <FETCH>IsRevenue,AffectsGrossProfit,IsDeemedPositive,SortPosition,_PrimaryGroup</FETCH>
                     </COLLECTION>
                 </TDLMESSAGE>
             </TDL>
