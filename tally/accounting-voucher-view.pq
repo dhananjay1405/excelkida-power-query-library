@@ -1,0 +1,19 @@
+let
+    fromDate = #date(2020,4,1),
+    toDate = #date(2021,3,31),
+    targetCompany = "",
+    _fromDate = Date.ToText(fromDate, "d-MMM-yyyy"),
+    _toDate = Date.ToText(toDate, "d-MMM-yyyy"),
+    payload_xml_01 = "<?xml version=""1.0"" encoding=""utf-8""?><ENVELOPE><HEADER><VERSION>1</VERSION><TALLYREQUEST>Export</TALLYREQUEST><TYPE>Data</TYPE><ID>MyReportAccountingVoucherTable</ID></HEADER><BODY><DESC><STATICVARIABLES><SVEXPORTFORMAT>XML (Data Interchange)</SVEXPORTFORMAT><SVFROMDATE>$fromDate</SVFROMDATE><SVTODATE>$toDate</SVTODATE><SVCURRENTCOMPANY>$targetCompany</SVCURRENTCOMPANY></STATICVARIABLES><TDL><TDLMESSAGE><REPORT NAME=""MyReportAccountingVoucherTable""><FORMS>MyForm</FORMS></REPORT><FORM NAME=""MyForm""><PARTS>MyPart01</PARTS><XMLTAG>DATA</XMLTAG></FORM><PART NAME=""MyPart01""><LINES>MyLine01</LINES><REPEAT>MyLine01 : MyCollection</REPEAT><SCROLLED>Vertical</SCROLLED></PART><PART NAME=""MyPart02""><LINES>MyLine02</LINES><REPEAT>MyLine02 : AllLedgerEntries</REPEAT><SCROLLED>Vertical</SCROLLED></PART><LINE NAME=""MyLine01""><FIELDS>FldDate,FldVoucherType,FldVoucherNumber,FldPartyName,FldVoucherCategory,FldNarration</FIELDS><EXPLODE>MyPart02</EXPLODE><XMLTAG>VOUCHER</XMLTAG></LINE><LINE NAME=""MyLine02""><FIELDS>FldLedgerName,FldLedgerAmount</FIELDS><XMLTAG>ACCOUNTING_ALLOCATION</XMLTAG></LINE><FIELD NAME=""FldDate""><SET>$Date</SET><XMLTAG>DATE</XMLTAG></FIELD><FIELD NAME=""FldVoucherType""><SET>$VoucherTypeName</SET><XMLTAG>VOUCHERTYPE</XMLTAG></FIELD><FIELD NAME=""FldVoucherNumber""><SET>if $$IsEmpty:$VoucherNumber then $$StrByCharCode:245 else $VoucherNumber</SET><XMLTAG>VOUCHERNUMBER</XMLTAG></FIELD><FIELD NAME=""FldPartyName""><SET>if $$IsEmpty:$PartyLedgerName then $$StrByCharCode:245 else $PartyLedgerName</SET><XMLTAG>PARTYNAME</XMLTAG></FIELD><FIELD NAME=""FldVoucherCategory""><SET>$Parent:VoucherType:$VoucherTypeName</SET><XMLTAG>VOUCHERCATEGORY</XMLTAG></FIELD><FIELD NAME=""FldNarration""><SET>if $$IsEmpty:$Narration then $$StrByCharCode:245 else $Narration</SET><XMLTAG>Narration</XMLTAG></FIELD><FIELD NAME=""FldLedgerName""><SET>$LedgerName</SET><XMLTAG>LEDGER</XMLTAG></FIELD><FIELD NAME=""FldLedgerAmount""><SET>$$StringFindAndReplace:(if $$IsDebit:$Amount then -$$NumValue:$Amount else $$NumValue:$Amount):""(-)"":""-""</SET><XMLTAG>AMOUNT</XMLTAG></FIELD><COLLECTION NAME=""MyCollection""><TYPE>Voucher</TYPE><FETCH>AllLedgerEntries</FETCH><FETCH>Narration</FETCH><FETCH>PartyLedgerName</FETCH><FILTER>Fltr01,Fltr02</FILTER></COLLECTION><SYSTEM TYPE=""Formulae"" NAME=""Fltr01"">NOT $IsCancelled</SYSTEM><SYSTEM TYPE=""Formulae"" NAME=""Fltr02"">NOT $IsOptional</SYSTEM></TDLMESSAGE></TDL></DESC></BODY></ENVELOPE>",
+    payload_xml_02 = Text.Replace(payload_xml_01, "$fromDate", _fromDate),
+    payload_xml_03 = Text.Replace(payload_xml_02, "$toDate", _toDate),
+    payload_xml_04 = if targetCompany = "" then Text.Replace(payload_xml_03, "<SVCURRENTCOMPANY>$targetCompany</SVCURRENTCOMPANY>", "") else Text.Replace(payload_xml_03, "$targetCompany", targetCompany),
+    resp = Text.FromBinary(Web.Contents("http://localhost:9000", [ Content = Text.ToBinary(payload_xml_04, TextEncoding.Utf16), Headers=[#"Content-Type"="text/xml;charset=utf-16"]]), TextEncoding.Utf16),
+    Source = Xml.Tables(resp),
+    Table = Source{0}[Table],
+    #"Changed Type" = Table.TransformColumnTypes(Table,{{"DATE", type date}, {"VOUCHERTYPE", type text}, {"VOUCHERNUMBER", type text}, {"PARTYNAME", type text}, {"VOUCHERCATEGORY", type text}, {"NARRATION", type text}}),
+    #"Replaced Value" = Table.ReplaceValue(#"Changed Type","õ","",Replacer.ReplaceText,{"VOUCHERNUMBER", "PARTYNAME", "NARRATION"}),
+    #"Expanded ACCOUNTING_ALLOCATION" = Table.ExpandTableColumn(#"Replaced Value", "ACCOUNTING_ALLOCATION", {"LEDGER", "AMOUNT"}, {"LEDGER", "AMOUNT"}),
+    #"Changed Type1" = Table.TransformColumnTypes(#"Expanded ACCOUNTING_ALLOCATION",{{"LEDGER", type text}, {"AMOUNT", type number}})
+in
+    #"Changed Type1"

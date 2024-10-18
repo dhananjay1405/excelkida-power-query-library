@@ -12,6 +12,7 @@
                 <SVFROMDATE>$fromDate$</SVFROMDATE>
                 <SVTODATE>$toDate$</SVTODATE>
                 <SVEXPORTFORMAT>ASCII (Comma Delimited)</SVEXPORTFORMAT>
+                <SVCURRENTCOMPANY>$targetCompany</SVCURRENTCOMPANY>
             </STATICVARIABLES>
             <TDL>
                 <TDLMESSAGE>
@@ -27,7 +28,7 @@
                         <SCROLLED>Vertical</SCROLLED>
                     </PART>
                     <LINE NAME="MyLine">
-                        <FIELDS>FldName,FldParent,FldPrimaryGroup,FldOpeningBalance,FldNetDebit,FldNetCredit,FldClosingBalance,FldDescription</FIELDS>
+                        <FIELDS>FldName,FldParent,FldPrimaryGroup,FldOpeningBalance,FldNetDebit,FldNetCredit,FldClosingBalance,FldDescription,FldNotes</FIELDS>
                     </LINE>
                     <FIELD NAME="FldName">
                         <SET>$$StringFindAndReplace:$Name:'"':'""'</SET>
@@ -52,6 +53,9 @@
                     </FIELD>
                     <FIELD NAME="FldDescription">
                         <SET>if $$IsEmpty:$Description then $$StrByCharCode:245 else $$StringFindAndReplace:$Description:'"':'""'</SET>
+                    </FIELD>
+                    <FIELD NAME="FldNotes">
+                        <SET>if $$IsEmpty:$Narration then $$StrByCharCode:245 else $$StringFindAndReplace:$Narration:'"':'""'</SET>
                     </FIELD>
                     <COLLECTION NAME="MyCollection">
                         <TYPE>Ledger</TYPE>
